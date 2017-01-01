@@ -1,0 +1,41 @@
+{
+  "name": "stylelint-performance-animation",
+  "version": "0.1.0",
+  "description": "Stylelint rule for preventing the use of low performance animation",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "npm run prepublish && node test/index.js",
+    "build": "babel src --presets babel-preset-es2015 --out-dir dist",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "url": "https://github.com/konstantin24121/stylelint-performance-animation.git",
+    "type": "git"
+  },
+  "author": "VinstonWolf <konstantin24121@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/konstantin24121/stylelint-performance-animation/issues"
+  },
+  "homepage": "https://github.com/konstantin24121/stylelint-performance-animation#readme",
+  "dependencies": {
+    "stylelint": "^7.2.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.14.0",
+    "babel-eslint": "^6.1.2",
+    "babel-preset-es2015": "^6.14.0",
+    "eslint": "^3.5.0",
+    "eslint-config-standard": "^6.0.1",
+    "eslint-plugin-promise": "^2.0.1",
+    "eslint-plugin-standard": "^2.0.0",
+    "stylelint-test-rule-tape": "^0.2.0"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "keywords": [
+    "stylelint-plugin",
+    "animation performance"
+  ]
+}

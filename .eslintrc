@@ -1,0 +1,27 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 2017,
+    "sourceType": "module"
+  },
+  "extends": "airbnb",
+  "env": {
+    "node": true,
+  },
+  "rules": {
+    "no-tabs": 0,
+    "linebreak-style": 0,
+    "no-console": 0,
+    "indent": [1, 2, {
+      "SwitchCase": 1,
+    }],
+    "global-require": 0,
+    "no-underscore-dangle": 0,
+    "no-useless-constructor": 1,
+    "space-before-function-paren": 1,
+    "space-before-blocks": 1,
+    "arrow-parens": [2, "always"],
+    "no-restricted-syntax": 0,
+    "guard-for-in": 0
+  }
+}

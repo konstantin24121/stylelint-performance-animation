@@ -1,0 +1,27 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules
+jspm_packages
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Yarn ignore
+# yarn.lock
+# why? ->> https://yarnpkg.com/en/docs/yarn-lock#toc-check-into-source-control
+
+#Genered files by webpack
+static/dist/*
+
+#Other
+.env
+public/*
+reports/*
+styleguide/*
