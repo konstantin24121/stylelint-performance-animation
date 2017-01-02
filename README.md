@@ -28,8 +28,8 @@ Add this config to your `.stylelintrc`:
 ## Details
 
 ```css
-div { transition: margin-left 350ms easy }
-/**               ^^^^^^^^^^^
+div { transition: margin 350ms easy }
+/**               ^^^^^^
  * You should not use low performance animation properties */
 ```
 
@@ -55,7 +55,7 @@ div { transition: transform 350ms easy; }
 
 ## License
 
-MIT © [vinston Wolf](https://github.com/konstantin24121)
+MIT © [Vinston Wolf](https://github.com/konstantin24121)
 
 [ci]: https://travis-ci.org/konstantin24121/stylelint-performance-animation
 [ci-img]: https://travis-ci.org/konstantin24121/stylelint-performance-animation.svg?branch=master
