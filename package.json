@@ -1,6 +1,6 @@
 {
   "name": "stylelint-performance-animation",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Stylelint rule for preventing the use of low performance animation",
   "main": "./dist/index.js",
   "scripts": {

@@ -1,7 +1,7 @@
 import stylelint from 'stylelint'
 import valueParser from 'postcss-value-parser';
 
-export const ruleName = 'plugin/no-low-prformance-animation';
+export const ruleName = 'plugin/no-low-performance-animation';
 export const messages = stylelint.utils.ruleMessages(ruleName, {
   default: () => {
     return 'You should not use low performance animation properties.'
