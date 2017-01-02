@@ -4,7 +4,7 @@
   "description": "Stylelint rule for preventing the use of low performance animation",
   "main": "./dist/index.js",
   "scripts": {
-    "test": "npm run prepublish && node test/index.js",
+    "test": "node test/index.js",
     "build": "babel src --presets babel-preset-es2015 --out-dir dist",
     "prepublish": "npm run build"
   },
