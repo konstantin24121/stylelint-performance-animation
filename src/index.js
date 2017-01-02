@@ -1,4 +1,5 @@
 import stylelint from 'stylelint'
+import valueParser from 'postcss-value-parser';
 
 export const ruleName = 'plugin/no-low-prformance-animation';
 export const messages = stylelint.utils.ruleMessages(ruleName, {
@@ -7,17 +8,61 @@ export const messages = stylelint.utils.ruleMessages(ruleName, {
   }
 })
 
-module.exports = stylelint.createPlugin(ruleName, (options) => (cssRoot, result) => {
-  cssRoot.walkDecls('transition-property', (decl) => {
-    const allowedValue = ['opacity', 'transform'];
-    const value = decl.value;
-    if (allowedValue.indexOf(value) >= 0) return
+const TIMING_FUNCTION_KEYWORDS = [
+  'ease',
+  'ease-in',
+  'ease-out',
+  'ease-in-out',
+  'linear',
+  'step-start',
+  'step-end'
+];
 
-    stylelint.utils.report({
-      ruleName: ruleName,
-      result: result,
-      node: decl,
-      message: messages.default()
+module.exports = stylelint.createPlugin(ruleName, (options) => (cssRoot, result) => {
+  const allowedValue = ['opacity', 'transform'];
+
+  cssRoot.walkDecls('transition-property', (decl) => {
+    const value = decl.value;
+
+    valueParser(value).walk((node) => {
+      if (node.type === 'word' && allowedValue.indexOf(node.value) < 0) {
+        stylelint.utils.report({
+          ruleName: ruleName,
+          result: result,
+          node: decl,
+          message: messages.default()
+        })
+      }
+    });
+
+    return;
+  })
+
+  cssRoot.walkDecls('transition', (decl) => {
+    const value = decl.value;
+    const nodes = [];
+
+    valueParser(value).walk((node) => {
+      if (node.type === 'word')
+        nodes.push(node.value)
+      return false;
+    })
+
+    const props = nodes.filter((node) => {
+      if (/[\+-]?[\w\.]*m?s/gim.test(node)) return false;
+      if (TIMING_FUNCTION_KEYWORDS.indexOf(node) >=0 ) return false;
+      return true;
+    })
+
+    props.forEach((value) => {
+      if (allowedValue.indexOf(value) < 0) {
+        stylelint.utils.report({
+          ruleName: ruleName,
+          result: result,
+          node: decl,
+          message: messages.default()
+        })
+      }
     })
   })
 })

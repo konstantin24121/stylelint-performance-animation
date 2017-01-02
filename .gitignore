@@ -18,10 +18,7 @@ jspm_packages
 # why? ->> https://yarnpkg.com/en/docs/yarn-lock#toc-check-into-source-control
 
 #Genered files by webpack
-static/dist/*
+dist/*
 
 #Other
-.env
-public/*
-reports/*
-styleguide/*
+*.sublime-project
