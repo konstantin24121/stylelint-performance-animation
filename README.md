@@ -10,6 +10,13 @@ Stylelint rule for preventing the use of low performance animation.
 npm install stylelint-performance-animation --save-dev
 ```
 
+or
+
+
+```sh
+yarn add stylelint-performance-animation --save-dev
+```
+
 ## Usage
 
 Add this config to your `.stylelintrc`:
