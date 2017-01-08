@@ -1,12 +1,13 @@
 import stylelint from 'stylelint'
 import valueParser from 'postcss-value-parser';
 import isString from 'lodash/isString';
+import filter from 'lodash/filter'
+import declarationValueIndex from 'stylelint/lib/utils/declarationValueIndex';
 
 export const ruleName = 'plugin/no-low-performance-animation';
 export const messages = stylelint.utils.ruleMessages(ruleName, {
-  default: () => {
-    return 'You should not use low performance animation properties.'
-  }
+  default: (prop) =>
+    `You should not use low performance animation properties (${prop}).`
 })
 
 const TIMING_FUNCTION_KEYWORDS = [
@@ -23,9 +24,9 @@ const optionsSchema = {
   ignore: [isString],
 };
 
-module.exports = stylelint.createPlugin(ruleName, (options) => (cssRoot, result) => {
+module.exports = stylelint.createPlugin(ruleName, (actual, options) => (cssRoot, result) => {
 
-  const validOptions = stylelint.utils.validateOptions(result, ruleName, {
+  const validOptions = stylelint.utils.validateOptions(result, ruleName, { actual }, {
     actual: options,
     possible: optionsSchema,
     optional: true,
@@ -40,11 +41,13 @@ module.exports = stylelint.createPlugin(ruleName, (options) => (cssRoot, result)
 
     valueParser(value).walk((node) => {
       if (node.type === 'word' && allowedValue.indexOf(node.value) < 0) {
+        const index = declarationValueIndex(decl) + node.sourceIndex;
         stylelint.utils.report({
           ruleName: ruleName,
           result: result,
           node: decl,
-          message: messages.default()
+          message: messages.default(node.value),
+          index: index,
         })
       }
     });
@@ -58,26 +61,30 @@ module.exports = stylelint.createPlugin(ruleName, (options) => (cssRoot, result)
 
     valueParser(value).walk((node) => {
       if (node.type === 'word')
-        nodes.push(node.value)
+        nodes.push({index: node.sourceIndex, value: node.value});
       return false;
     })
 
-    const props = nodes.filter((node) => {
-      if (/[\+-]?[\w\.]*m?s/gim.test(node)) return false;
-      if (TIMING_FUNCTION_KEYWORDS.indexOf(node) >=0 ) return false;
+    const props = nodes.filter(({ value }) => {
+      if (/[\+-]?[\w\.]*m?s/gim.test(value)) return false;
+      if (TIMING_FUNCTION_KEYWORDS.indexOf(value) >=0 ) return false;
       return true;
     })
 
-    props.forEach((value) => {
-      if (allowedValue.indexOf(value) < 0) {
+    for (const prop of props) {
+      const index = declarationValueIndex(decl) + prop.index;
+      if (allowedValue.indexOf(prop.value) < 0) {
         stylelint.utils.report({
           ruleName: ruleName,
           result: result,
           node: decl,
-          message: messages.default()
+          message: messages.default(prop.value),
+          index: index,
         })
+        return;
       }
-    })
+    }
+    return;
   })
 })
 
