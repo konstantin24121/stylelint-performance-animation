@@ -1,5 +1,6 @@
 import stylelint from 'stylelint'
 import valueParser from 'postcss-value-parser';
+import isString from 'lodash/isString';
 
 export const ruleName = 'plugin/no-low-performance-animation';
 export const messages = stylelint.utils.ruleMessages(ruleName, {
@@ -18,8 +19,21 @@ const TIMING_FUNCTION_KEYWORDS = [
   'step-end'
 ];
 
+const optionsSchema = {
+  ignore: [isString],
+};
+
 module.exports = stylelint.createPlugin(ruleName, (options) => (cssRoot, result) => {
-  const allowedValue = ['opacity', 'transform'];
+
+  const validOptions = stylelint.utils.validateOptions(result, ruleName, {
+    actual: options,
+    possible: optionsSchema,
+    optional: true,
+  });
+
+  if (!validOptions) return;
+
+  const allowedValue = ['opacity', 'transform'].concat(options ? options.ignore : []);
 
   cssRoot.walkDecls('transition-property', (decl) => {
     const value = decl.value;

@@ -52,3 +52,30 @@ testRule(fn.rule, {
     },
   ]
 })
+
+testRule(fn.rule, {
+  ruleName: fn.ruleName,
+  skipBasicChecks: true,
+  config: {
+    ignore: ['color', 'background-color']
+  },
+  accept: [
+    {
+      code: 'div { transition-property: transform, color; }'
+    },
+    {
+      code: 'div { transition-property: color; }'
+    },
+    {
+      code: 'div { transition-property: background-color, color; }'
+    },
+  ],
+  reject: [
+    {
+      code: 'div { transition-property: transform, color, border; }',
+      message: fn.messages.default()
+    },
+  ],
+})
+
+

@@ -58,6 +58,26 @@ The following pattern is *not* considered warning:
 div { transition: transform 350ms easy; }
 ```
 
+### Optional secondary options
+
+#### `ignore: [string]`
+
+Given:
+
+`{ ignore: ['color', 'background-color'] }`
+
+The following pattern is considered warning:
+
+```css
+div { transition: color, margin; }
+```
+
+The following pattern is *not* considered warning:
+
+```css
+div { transition: color, opacity, background-color; }
+```
+
 ---
 
 ## License

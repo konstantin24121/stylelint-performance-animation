@@ -6,6 +6,7 @@
   "scripts": {
     "test": "node test/index.js",
     "build": "babel src --presets babel-preset-es2015 --out-dir dist",
+    "start": "npm run build && npm run test",
     "prepublish": "npm run build"
   },
   "repository": {
@@ -19,6 +20,7 @@
   },
   "homepage": "https://github.com/konstantin24121/stylelint-performance-animation#readme",
   "dependencies": {
+    "lodash": "^4.17.4",
     "postcss-value-parser": "^3.3.0",
     "stylelint": "^7.2.0"
   },
