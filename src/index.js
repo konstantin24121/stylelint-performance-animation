@@ -71,7 +71,6 @@ module.exports = stylelint.createPlugin(ruleName, (actual, options) => (cssRoot,
       if (TIMING_FUNCTION_KEYWORDS.indexOf(value) >=0 ) return false;
       return true;
     })
-
     for (const prop of props) {
       const index = declarationValueIndex(decl) + prop.index;
       if (allowedValue.indexOf(prop.value) < 0) {
@@ -86,6 +85,21 @@ module.exports = stylelint.createPlugin(ruleName, (actual, options) => (cssRoot,
       }
     }
     return;
+  })
+
+  cssRoot.walkAtRules(/^keyframes$/i, atRuleKeyframes => {
+    atRuleKeyframes.walkDecls(decl => {
+      if(allowedValue.indexOf(decl.prop) < 0) {
+        const index = 1;
+        stylelint.utils.report({
+          ruleName: ruleName,
+          result: result,
+          node: decl,
+          message: messages.default(decl.prop),
+        })
+        return;
+      };
+    })
   })
 })
 

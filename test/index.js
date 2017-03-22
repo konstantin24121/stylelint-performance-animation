@@ -42,6 +42,9 @@ testRule(fn.rule, {
     {
       code: 'div { transition: opacity 250ms $timingFunction; }'
     },
+    {
+      code: '@keyframes test {0% { opacity: 0 } 100% {opacity: 1}}'
+    },
   ],
   reject: [
     {
@@ -78,7 +81,16 @@ div {
       message: fn.messages.default('margin'),
       line: 5,
       column: 24,
-    }
+    },
+    {
+      code: `
+@keyframes test{
+  50% { top: 1px; }
+}`,
+      message: fn.messages.default('top'),
+      line: 3,
+      column: 9,
+    },
   ]
 })
 
@@ -101,6 +113,9 @@ testRule(fn.rule, {
     {
       code: 'div { transition-property: background-color, color; }'
     },
+    {
+      code: '@keyframes test {0% { color: black } 100% {color: white}}'
+    },
   ],
   reject: [
     {
@@ -108,6 +123,12 @@ testRule(fn.rule, {
       message: fn.messages.default('border'),
       line: 1,
       column: 46,
+    },
+    {
+      code: '@keyframes test {0% { border-width: 2px }}',
+      message: fn.messages.default('border-width'),
+      line: 1,
+      column: 23,
     },
   ],
 })

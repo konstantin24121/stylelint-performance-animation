@@ -2,7 +2,7 @@
 
 [![Build Status][ci-img]][ci]
 
-Stylelint rule for preventing the use of low performance animation.
+Stylelint rule for preventing the use of low performance animation and transition.
 
 ## Install
 
@@ -37,6 +37,12 @@ Add this config to your `.stylelintrc`:
 ```css
 div { transition: margin 350ms easy }
 /**               ^^^^^^
+ * You should not use low performance animation properties */
+```
+
+```css
+@keyframes { 50% { top: 5px; } }
+/**                ^^^^^^
  * You should not use low performance animation properties */
 ```
 
