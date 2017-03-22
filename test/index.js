@@ -30,6 +30,18 @@ testRule(fn.rule, {
     {
       code: 'div { transition: opacity 350ms easy-in 100ms, transform 350ms linear 200ms; }'
     },
+    {
+      code: 'div { transition: none; }'
+    },
+    {
+      code: 'div { transition: inherit; }'
+    },
+    {
+      code: 'div { transition: initial; }'
+    },
+    {
+      code: 'div { transition: opacity 250ms $timingFunction; }'
+    },
   ],
   reject: [
     {

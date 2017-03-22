@@ -34,7 +34,7 @@ module.exports = stylelint.createPlugin(ruleName, (actual, options) => (cssRoot,
 
   if (!validOptions) return;
 
-  const allowedValue = ['opacity', 'transform'].concat(options ? options.ignore : []);
+  const allowedValue = ['opacity', 'transform', 'none', 'initial', 'inherit'].concat(options ? options.ignore : []);
 
   cssRoot.walkDecls('transition-property', (decl) => {
     const value = decl.value;
@@ -67,6 +67,7 @@ module.exports = stylelint.createPlugin(ruleName, (actual, options) => (cssRoot,
 
     const props = nodes.filter(({ value }) => {
       if (/[\+-]?[\w\.]*m?s/gim.test(value)) return false;
+      if (/^\$/gim.test(value)) return false;
       if (TIMING_FUNCTION_KEYWORDS.indexOf(value) >=0 ) return false;
       return true;
     })
